@@ -4,8 +4,15 @@ import tseslint from 'typescript-eslint';
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
-  { files: ['**/*.{js,mjs,cjs,ts}'] },
-  { languageOptions: { globals: globals.node } },
+  {
+    files: ['**/*.{js,mjs,cjs,ts}'],
+    languageOptions: {
+      globals: {
+        ...globals.node, // Keep Node.js globals
+        process: 'readonly', // Add your specific globals here
+      },
+    },
+  },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   {
@@ -16,10 +23,6 @@ export default [
       'prefer-const': 'error',
       'no-console': 'warn',
       'no-undef': 'error',
-    },
-
-    globals: {
-      process: 'readonly',
     },
   },
 ];
